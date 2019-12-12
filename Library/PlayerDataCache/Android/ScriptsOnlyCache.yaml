@@ -14,6 +14,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
@@ -55,6 +56,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11008}
     - Class: 114
       Script: {instanceID: 11348}
+    - Class: 114
+      Script: {instanceID: 11380}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -368,13 +371,13 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: d04b3d5ed296e761ccb806dcf0d8c9d1
+      Hash: bb1cf311a4f41b39bba6bed3f9de5e45
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraMovementScript
   - hash:
       serializedVersion: 2
-      Hash: c12147cd0bfafbc7881a8ff7691e2659
+      Hash: 18d4e1d72f57086ba50fe217c429a69d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MenuScript
@@ -504,6 +507,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: e211995227386e62450d7883c18282cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Mission
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

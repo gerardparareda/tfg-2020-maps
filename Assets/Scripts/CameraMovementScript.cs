@@ -8,6 +8,7 @@ public class CameraMovementScript : MonoBehaviour
     RectTransform rt;
 
     public float dragSpeed = 2.0f;
+    public float scrollSpeed = 1.0f;
 
     private float minX;
     private float maxX;
@@ -56,7 +57,22 @@ public class CameraMovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isHeld)
+        if(Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+            float difference = currentMagnitude - prevMagnitude;
+
+            zoom(difference * 0.005f);
+
+        }else if (isHeld)
         {
             //Debug.Log("Held");
 
@@ -67,42 +83,8 @@ public class CameraMovementScript : MonoBehaviour
             myCamera.transform.localPosition = new Vector3(-(mousePos.x * dragSpeed) + startPosX, -(mousePos.y * dragSpeed) + startPosY, -10);
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            Debug.Log("scrolling");
-            myCamera.orthographicSize -= 0.5f;
-            if (myCamera.orthographicSize < 2.4f)
-            {
-                myCamera.orthographicSize = 2.4f;
-            }
-
-            float vertExtent = myCamera.orthographicSize;
-            float horzExtent = vertExtent * Screen.width / Screen.height;
-
-            // Calculations assume map is position at the origin
-            minX = horzExtent - rt.rect.width / 2.0f;
-            maxX = rt.rect.width / 2.0f - horzExtent;
-            minY = vertExtent - rt.rect.height / 2.0f;
-            maxY = rt.rect.height / 2.0f - vertExtent;
-        }
-
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            myCamera.orthographicSize += 0.5f;
-            if(myCamera.orthographicSize > 7.4f)
-            {
-                myCamera.orthographicSize = 7.4f;
-            }
-
-            float vertExtent = myCamera.orthographicSize;
-            float horzExtent = vertExtent * Screen.width / Screen.height;
-
-            // Calculations assume map is position at the origin
-            minX = horzExtent - rt.rect.width / 2.0f;
-            maxX = rt.rect.width / 2.0f - horzExtent;
-            minY = vertExtent - rt.rect.height / 2.0f;
-            maxY = rt.rect.height / 2.0f - vertExtent;
-        }
+        zoom(Input.GetAxis("Mouse ScrollWheel") * scrollSpeed);
+        
 
     }
 
@@ -112,5 +94,19 @@ public class CameraMovementScript : MonoBehaviour
         v3.x = Mathf.Clamp(v3.x, minX, maxX);
         v3.y = Mathf.Clamp(v3.y, minY, maxY);
         myCamera.transform.position = v3;
+    }
+
+    void zoom(float increment)
+    {
+        myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize - (increment*scrollSpeed), 2.4f, 7.4f);
+
+        float vertExtent = myCamera.orthographicSize;
+        float horzExtent = vertExtent * Screen.width / Screen.height;
+
+        // Calculations assume map is position at the origin
+        minX = horzExtent - rt.rect.width / 2.0f;
+        maxX = rt.rect.width / 2.0f - horzExtent;
+        minY = vertExtent - rt.rect.height / 2.0f;
+        maxY = rt.rect.height / 2.0f - vertExtent;
     }
 }

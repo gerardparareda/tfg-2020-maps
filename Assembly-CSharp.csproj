@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\CameraMovementScript.cs" />
     <Compile Include="Assets\Scripts\GameCanvasScript.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
+    <Compile Include="Assets\Scripts\Mission.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/Documents/Enginyeria/prog2/learning-unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
