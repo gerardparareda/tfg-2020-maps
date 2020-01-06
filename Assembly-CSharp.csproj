@@ -64,13 +64,16 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraMovementScript.cs" />
     <Compile Include="Assets\Scripts\CameraMovementScript1.cs" />
+    <Compile Include="Assets\Scripts\Delaunay.cs" />
     <Compile Include="Assets\Scripts\GameCanvasScript.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
+    <Compile Include="Assets\Scripts\MeshGenerator1.cs" />
     <Compile Include="Assets\Scripts\Mission.cs" />
     <Compile Include="Assets\Scripts\TopoArcsWrapper.cs" />
     <Compile Include="Assets\Scripts\TopoJsonReader.cs" />
     <Compile Include="Assets\Scripts\topoJsonWrapper.cs" />
+    <None Include="Assets\Resources\TopoJsonMaps\map3.txt" />
     <None Include="Assets\Resources\TopoJsonMaps\map2.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/Documents/Enginyeria/learning-unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

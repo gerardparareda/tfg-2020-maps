@@ -18,7 +18,7 @@ public class topoJsonWrapper
 [Serializable]
 public class TransformField
 {
-    public double[] scale;
+    public float[] scale;
     public int translate;
 }
 

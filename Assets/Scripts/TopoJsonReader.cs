@@ -10,8 +10,7 @@ public class TopoJsonReader : MonoBehaviour
     string path = "TopoJsonMaps/map2";
     topoJsonWrapper topoInfo;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ParseTopoJSON(string path)
     {
         testText = Resources.Load<TextAsset>(path);
         //Debug.Log(testText.ToString());
@@ -23,7 +22,8 @@ public class TopoJsonReader : MonoBehaviour
         if (topoInfo != null && topoInfo.arcs != null)
         {
             Debug.Log("TopoJSON parsed successfully");
-        } else
+        }
+        else
         {
             Debug.Log("Couldn't parse TopoJSON");
         }
@@ -42,7 +42,7 @@ public class TopoJsonReader : MonoBehaviour
         string2 = string2.Replace(" ", "");
 
         Regex rx = new Regex("(\\[\\s*\\[)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex rx2 = new Regex("(\\[-*\\d+\\.*\\d+,-*\\d+\\.*\\d+\\])", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex rx2 = new Regex("(\\[-*\\d+\\.*\\d*,-*\\d+\\.*\\d*\\])", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         
         MatchCollection matches = rx.Matches(string2);
 
@@ -90,6 +90,9 @@ public class TopoJsonReader : MonoBehaviour
         return newList;
     }
 
-
+    public topoJsonWrapper RetrieveJsonData()
+    {
+        return topoInfo;
+    }
 
 }
