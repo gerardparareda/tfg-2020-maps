@@ -73,8 +73,15 @@
     <Compile Include="Assets\Scripts\TopoArcsWrapper.cs" />
     <Compile Include="Assets\Scripts\TopoJsonReader.cs" />
     <Compile Include="Assets\Scripts\topoJsonWrapper.cs" />
+    <Compile Include="Assets\Scripts\Triangulator.cs" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
+    <None Include="Assets\Resources\TopoJsonMaps\map_convex3.txt" />
+    <None Include="Assets\Resources\TopoJsonMaps\map_cat1.txt" />
     <None Include="Assets\Resources\TopoJsonMaps\map3.txt" />
     <None Include="Assets\Resources\TopoJsonMaps\map2.txt" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/Documents/Enginyeria/learning-unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

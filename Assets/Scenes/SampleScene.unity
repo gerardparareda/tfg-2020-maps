@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1042fe5131a790a4ebec0827ef779422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: TopoJsonMaps/map3
+  path: TopoJsonMaps/map_convex
 --- !u!33 &111659095
 MeshFilter:
   m_ObjectHideFlags: 0

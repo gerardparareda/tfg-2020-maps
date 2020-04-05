@@ -33,12 +33,11 @@ public class TopoJsonReader : MonoBehaviour
     {
         List<List<Vector2>> newList = new List<List<Vector2>>();
 
-        string toFind1 = "\"arcs\":";
+        string toFind1 = "[[[";
         string toFind2 = "],\"transform\"";
-        int firstArc = text.IndexOf(toFind1) + toFind1.Length;
-        int secondArc = text.IndexOf(toFind1, firstArc) + toFind1.Length;
-        int end = text.IndexOf(toFind2, secondArc);
-        string string2 = text.Substring(secondArc + 1, end - secondArc - 1);
+        int posArc = text.IndexOf(toFind1) + toFind1.Length - 2;
+        int end = text.IndexOf(toFind2);
+        string string2 = text.Substring(posArc, end - posArc); //Start, Length
         string2 = string2.Replace(" ", "");
 
         Regex rx = new Regex("(\\[\\s*\\[)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
