@@ -66,7 +66,7 @@ public class MeshGenerator1 : MonoBehaviour
     void CreateShapeFromTopoJSON()
     {
         topoJsonWrapper topoData = topoReader.RetrieveJsonData();
-        int todoArc = topoData.objects.collection.geometries[0].arcs[0];
+        //int todoArc = topoData.objects.collection.geometries[0].arcs[0];
 
         verticesTopoJson = new Vector3[topoData.arcs[feature].Count-1];
         Vector2[] vertices2D = new Vector2[verticesTopoJson.Length];

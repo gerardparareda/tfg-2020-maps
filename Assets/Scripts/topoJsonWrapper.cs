@@ -32,13 +32,21 @@ public class ObjectField
 public class CollectionField
 {
     public string type;
-    public Geometries[] geometries;
+    public List<Geometry> geometries;
 }
 
 [Serializable]
-public class Geometries
+public class Geometry
 {
     public string type;
-    public int[] arcs;
+    public List<int> arcs;
+    public List<List<int>> arcsMulti;
+    //public Properties properties;
+
+    public Geometry(string type, List<int> arcs)
+    {
+        this.type = type;
+        this.arcs = arcs;
+    }
 }
 
