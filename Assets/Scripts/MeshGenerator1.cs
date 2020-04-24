@@ -6,22 +6,24 @@ using UnityEngine;
 public class MeshGenerator1 : MonoBehaviour
 {
     public string path;
-    public int feature;
+    //public int feature;
+    public GameObject nodePrefab;
 
     TopoJsonReader topoReader;
 
+    List<GameObject> nodes;
+
     Mesh mesh;
 
-    Vector3[] vertices;
     Vector3[] verticesTopoJson;
 
     int[] triangles;
-    int[] trianglesTopoJson;
 
     void Start()
     {
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        nodes = new List<GameObject>();
+        //mesh = new Mesh();
+        //GetComponent<MeshFilter>().mesh = mesh;
 
         topoReader = new TopoJsonReader();
         topoReader.ParseTopoJSON(path);
@@ -31,8 +33,27 @@ public class MeshGenerator1 : MonoBehaviour
         //verticesTopoJson = topoReader.
 
         //CreateShape();
-        CreateShapeFromTopoJSON();
-        UpdateMesh();
+        CreateAllGameObjects();
+
+        //CreateShapeFromTopoJSON();
+        //UpdateMesh();
+    }
+
+    void CreateAllGameObjects()
+    {
+        for(int i = 0; i < topoReader.RetrieveJsonData().objects.collection.geometries.Count; i++)
+        {
+            //Instantiate nodePrefab at the same position as the parentNode
+            GameObject newNode = Instantiate(nodePrefab, gameObject.transform.position, Quaternion.identity);
+            CreateShapeFromTopoJSON(i);
+
+            newNode.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
+            newNode.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
+            newNode.GetComponent<Node>().UpdateMesh();
+            newNode.transform.parent = this.transform;
+
+            nodes.Add(newNode);
+        }
     }
 
     void SetGameObjectScale() {
@@ -44,31 +65,12 @@ public class MeshGenerator1 : MonoBehaviour
                 );
     }
 
-    void CreateShape()
-    {
-        vertices = new Vector3[]
-        {
-            new Vector3(0,0,0),
-            new Vector3(0,1,0),
-            new Vector3(1,0,0),
-            new Vector3(1,1,0)
-
-        };
-
-        triangles = new int[]
-        {
-            0, 1, 2,
-            1, 3, 2
-        };
-
-    }
-
-    void CreateShapeFromTopoJSON()
+    void CreateShapeFromTopoJSON(int feature)
     {
         topoJsonWrapper topoData = topoReader.RetrieveJsonData();
         //int todoArc = topoData.objects.collection.geometries[0].arcs[0];
 
-        verticesTopoJson = new Vector3[topoData.arcs[feature].Count-1];
+        verticesTopoJson = new Vector3[topoData.arcs[feature].Count-1]; //Change arcs to those of geometry
         Vector2[] vertices2D = new Vector2[verticesTopoJson.Length];
         Vector3[] vertices = new Vector3[vertices2D.Length];
         
@@ -100,17 +102,9 @@ public class MeshGenerator1 : MonoBehaviour
 
         triangles = indices;
 
-        //triangles = Delaunay.Triangulate(verticesTopoJson);
-
-        /*triangles = new int[]
-        {
-            2, 1, 0
-
-        };*/
-
     }
 
-    void UpdateMesh()
+    /*void UpdateMesh()
     {
         mesh.Clear();
 
@@ -118,5 +112,5 @@ public class MeshGenerator1 : MonoBehaviour
         mesh.triangles = triangles;
 
         mesh.RecalculateNormals();
-    }
+    }*/
 }

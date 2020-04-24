@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator1.cs" />
     <Compile Include="Assets\Scripts\Mission.cs" />
+    <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\TopoArcsWrapper.cs" />
     <Compile Include="Assets\Scripts\TopoJsonReader.cs" />
     <Compile Include="Assets\Scripts\Triangulator.cs" />
@@ -76,8 +77,10 @@
   <ItemGroup>
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
+     <None Include="Assets\Resources\TopoJsonMaps\spain-comunidad.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat1.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\catcomarca.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain.txt" />
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
@@ -87,6 +90,7 @@
      <None Include="Assets\Resources\TopoJsonMaps\cat2.txt" />
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
      <None Include="Assets\Resources\TopoJsonMaps\map_cat1.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\cat-only.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\multipoly.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map3.txt" />
     <Reference Include="Unity.VSCode.Editor">

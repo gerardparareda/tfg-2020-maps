@@ -170,7 +170,7 @@ public class TopoJsonReader : MonoBehaviour
 
         string toFind1 = "(\"arcs\":\\s*\\[\\s*\\[\\s*\\[)";
         string toFind2 = "]]]";
-        int posArc = text.IndexOf("[[[") + toFind1.Length - 2;
+        int posArc = text.IndexOf("[[[") + 1;
 
         MatchCollection arcs = (new Regex(toFind1, RegexOptions.Compiled | RegexOptions.IgnoreCase)).Matches(text);
 
