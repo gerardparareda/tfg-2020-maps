@@ -60,7 +60,7 @@ public class TopoJsonReader : MonoBehaviour
         for (int g = 0; g < numGeometries; g++)
         {
 
-            if(g == 49)
+            if(g == 5)
             {
                 //
             }
@@ -165,10 +165,24 @@ public class TopoJsonReader : MonoBehaviour
     {
         List<List<Vector2>> newList = new List<List<Vector2>>();
 
-        string toFind1 = "[[[";
+        string toFindGeom = "geometries";
+        int posGeometries = text.IndexOf(toFindGeom) + toFindGeom.Length; //find where geometries start
+
+        string toFind1 = "(\"arcs\":\\s*\\[\\s*\\[\\s*\\[)";
         string toFind2 = "]]]";
-        int posArc = text.IndexOf(toFind1) + toFind1.Length - 2;
-        int end = text.IndexOf(toFind2) + 2;
+        int posArc = text.IndexOf("[[[") + toFind1.Length - 2;
+
+        MatchCollection arcs = (new Regex(toFind1, RegexOptions.Compiled | RegexOptions.IgnoreCase)).Matches(text);
+
+        if (arcs.Count > 1)
+        {
+            if(posArc > posGeometries)
+            {
+                posArc = arcs[arcs.Count - 1].Index;
+            }
+        }
+
+        int end = text.IndexOf(toFind2, posArc) + 2;        
 
         string string2 = text.Substring(posArc, end - posArc); //Start, Length
         string2 = string2.Replace(" ", "");
