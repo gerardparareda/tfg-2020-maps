@@ -38,7 +38,6 @@ public class TopoJsonReader : MonoBehaviour
         string toFind1 = "geometries";
         int posGeometries = text.IndexOf(toFind1) + toFind1.Length; //find where geometries start
         int numGeometries = (new Regex("Polygon", RegexOptions.Compiled | RegexOptions.IgnoreCase)).Matches(text).Count;
-        numGeometries += (new Regex("MultiPolygon", RegexOptions.Compiled | RegexOptions.IgnoreCase)).Matches(text).Count;
 
         if(topoInfo.objects.collection.geometries == null)
         {
@@ -48,25 +47,87 @@ public class TopoJsonReader : MonoBehaviour
             topoInfo.objects.collection.geometries.Clear();
         }
 
-        int posArcs = 0;
         string toFind2 = "arcs\":[[";
         string toFind3 = "]]";
+        string toFind4 = "]]]";
+
+        Regex rx = new Regex("(\\[\\s*\\[)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex rx2 = new Regex("(-*\\d+\\,*)+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        int posArcs = 0;
+        int posBracket = text.IndexOf(toFind2, posGeometries) + toFind2.Length;
 
         for (int g = 0; g < numGeometries; g++)
         {
-            //If type == "multipolygon"
-            char tmp = text[text.IndexOf(toFind2) + toFind2.Length];
-            if (text[text.IndexOf(toFind2) + toFind2.Length].Equals('['))
+
+            if(g == 49)
             {
-                posArcs = text.IndexOf(toFind2) + toFind2.Length - 2;
-            } else
+                //
+            }
+
+            //Only happens the first time 
+            if (posArcs != 0)
+            {
+                posBracket = text.IndexOf(toFind2, posArcs + 2) + toFind2.Length;
+            }
+
+            //If type == "multipolygon"
+            char tmp = text[posBracket];
+            string tmpS = text.Substring(posBracket, 5);
+
+            if (text[posBracket].Equals('['))
+            {
+                if (posArcs == 0)
+                {
+                    posArcs = text.IndexOf(toFind2, posGeometries) + toFind2.Length - 1;
+                }
+                else
+                {
+                    posArcs = text.IndexOf(toFind2, posArcs + 2) + toFind2.Length - 1;
+                }
+
+                int posEndArcs = text.IndexOf(toFind4, posArcs) + 2;
+
+                string manipulate = text.Substring(posArcs, posEndArcs - posArcs);
+
+                Debug.Log("g: " + g + " str:" + manipulate);
+
+                MatchCollection matchCollection = rx.Matches(manipulate);
+
+                List<List<int>> tmpList = new List<List<int>>();
+
+                foreach(Match match in matchCollection)
+                {
+                    List<int> tmpInts = new List<int>();
+
+                    int endMC = manipulate.IndexOf("]]", match.Index);
+
+                    string parseList = manipulate.Substring(match.Index + 1, endMC - match.Index );
+
+                    MatchCollection matchCollection2 = rx2.Matches(parseList);
+
+                    foreach(Match match2 in matchCollection2)
+                    {
+                        //int endMCArray = parseList.IndexOf("]", match2.Index);
+                        string parsedArray = parseList.Substring(match2.Index, match2.Length);
+
+                        tmpList.Add(JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":[" + parsedArray + "]}").newGeometryArcs);
+                    }
+
+                    //tmpList.Add(JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":[" + parseList + "]}").newGeometryArcs);
+                }
+
+                topoInfo.objects.collection.geometries.Add(new Geometry("MultiPolygon", tmpList));
+
+            }
+            else
             {
                 if(posArcs == 0)
                 {
                     posArcs = text.IndexOf(toFind2, posGeometries + 2) + toFind2.Length - 2;
                 } else
                 {
-                    posArcs = text.IndexOf(toFind2, posGeometries + (posArcs - posGeometries) + 2) + toFind2.Length - 2;
+                    posArcs = text.IndexOf(toFind2, posArcs + 2) + toFind2.Length - 2;
                 }
 
                 int posEndArcs = text.IndexOf(toFind3, posArcs) + 2;
@@ -74,25 +135,26 @@ public class TopoJsonReader : MonoBehaviour
                 string string2 = text.Substring(posArcs + 1, posEndArcs - posArcs - 2); //Start, Length
                 string2 = string2.Replace(" ", "");
 
-                topoInfo.objects.collection.geometries.Add(new Geometry("Polygon", (JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":" + string2 + "}")).newGeometryArcs));
+                Debug.Log("g: " + g + " str:" + string2);
 
-                /*Regex rx = new Regex("(\\[\\s*\\[)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                MatchCollection matchCollection = rx2.Matches(string2);
 
-                MatchCollection matches = rx.Matches(string2);
+                List<List<int>> tmpList = new List<List<int>>();
 
-                string manipulate;
-                for (int i = 0; i <= matches.Count - 1; i++)
+                MatchCollection matchCollection2 = rx2.Matches(string2);
+
+                foreach (Match match2 in matchCollection2)
                 {
-                    manipulate = string2;
-                    string evalOutput = "{\"newGeometryArcs\":[";
-                    manipulate = manipulate.Substring(matches[i].Index, matches[i].Length); ;
+                    //int endMCArray = parseList.IndexOf("]", match2.Index);
+                    string parsedArray = string2.Substring(match2.Index, match2.Length);
 
-                    evalOutput = evalOutput.Substring(0, evalOutput.Length - 1);
-                    evalOutput += "]}";
+                    tmpList.Add(JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":[" + parsedArray + "]}").newGeometryArcs);
+                }
 
-                    //tmpList = JsonUtility.FromJson<TopoArcsWrapper>(evalOutput);
-                    //newList.Add(tmpList.newArcs);
-                }*/
+                topoInfo.objects.collection.geometries.Add(new Geometry("Polygon", tmpList));
+
+                //topoInfo.objects.collection.geometries.Add(new Geometry("Polygon", (JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":" + string2 + "}")).newGeometryArcs));
+
             }
             
         }

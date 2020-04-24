@@ -8,5 +8,4 @@ public class TopoArcsWrapper
 {
     public List<Vector2> newArcs;
     public List<int> newGeometryArcs;
-    public List<List<int>> newGeometryArcsLayered;
 }

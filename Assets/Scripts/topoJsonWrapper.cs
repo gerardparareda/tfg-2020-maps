@@ -39,11 +39,10 @@ public class CollectionField
 public class Geometry
 {
     public string type;
-    public List<int> arcs;
-    public List<List<int>> arcsMulti;
+    public List<List<int>> arcs;
     //public Properties properties;
 
-    public Geometry(string type, List<int> arcs)
+    public Geometry(string type, List<List<int>> arcs)
     {
         this.type = type;
         this.arcs = arcs;
