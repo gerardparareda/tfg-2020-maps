@@ -19,7 +19,7 @@ public class topoJsonWrapper
 public class TransformField
 {
     public float[] scale;
-    public int translate;
+    public float[] translate;
 }
 
 [Serializable]
@@ -48,4 +48,3 @@ public class Geometry
         this.arcs = arcs;
     }
 }
-
