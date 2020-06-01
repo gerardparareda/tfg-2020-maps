@@ -24,23 +24,14 @@ public class MeshGenerator1 : MonoBehaviour
     void Start()
     {
         nodes = new List<GameObject>();
-        //mesh = new Mesh();
-        //GetComponent<MeshFilter>().mesh = mesh;
 
         topoReader = new TopoJsonReader();
         topoReader.ParseTopoJSON(path);
 
         pos = new Vector2(0, 0);
 
-        //SetGameObjectScale();
-
-        //verticesTopoJson = topoReader.
-
-        //CreateShape();
         CreateAllGameObjects();
 
-        //CreateShapeFromTopoJSON();
-        //UpdateMesh();
     }
 
     void CreateAllGameObjects()
@@ -55,7 +46,7 @@ public class MeshGenerator1 : MonoBehaviour
             {
                 //Instantiate nodePrefab at the same position as the parentNode
                 GameObject newNode = Instantiate(nodePrefab, gameObject.transform.position, Quaternion.identity);
-                CreateShapeFromTopoJSON(i);
+                CreateGeometryFromTopoJSON(i, 0);
 
                 newNode.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
                 newNode.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
@@ -64,37 +55,48 @@ public class MeshGenerator1 : MonoBehaviour
                 newNode.transform.parent = this.transform;
 
                 nodes.Add(newNode);
-            } else 
+            }
+            if (topoData.objects.collection.geometries[i].type == "MultiPolygon")
             {
-                //Todo MultiPolygon
+                GameObject newNodeParent = Instantiate(nodePrefab, gameObject.transform.position, Quaternion.identity);
+
+                for (int j = 0; j < topoData.objects.collection.geometries[i].arcs.Count; j++)
+                {
+                    GameObject newNodeChild = Instantiate(nodePrefab, gameObject.transform.position, Quaternion.identity);
+
+                    CreateGeometryFromTopoJSON(i, j);
+
+                    newNodeChild.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
+                    newNodeChild.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
+                    newNodeChild.GetComponent<Node>().UpdateMesh();
+                    newNodeChild.name = "Node" + i + " , " + j;
+
+                    newNodeChild.transform.parent = newNodeParent.transform;
+                }
+
+                newNodeParent.name = "Node" + i;
+                newNodeParent.transform.parent = this.transform;
+
+                nodes.Add(newNodeParent);
             }
             
         }
     }
 
-    void CreateShapeFromTopoJSON(int feature)
+    void CreateGeometryFromTopoJSON(int feature, int child)
     {
         topoJsonWrapper topoData = topoReader.RetrieveJsonData();
-        //int todoArc = topoData.objects.collection.geometries[0].arcs[0];
 
         List<Vector2> vertices2DList = new List<Vector2>();
-        //Vector2 toAdd = new Vector2(0, 0);
 
-        if(feature == 1)
+        for (int arcFeature = 0; arcFeature < topoData.objects.collection.geometries[feature].arcs[child].Count; arcFeature++)
         {
-            //things
-        }
-
-
-        for (int arcFeature = 0; arcFeature < topoData.objects.collection.geometries[feature].arcs[0].Count; arcFeature++)
-        {
-            if(topoData.objects.collection.geometries[feature].arcs[0][arcFeature] < 0)
+            if (topoData.objects.collection.geometries[feature].arcs[child][arcFeature] < 0)
             {
 
-                //TODO
                 if (arcFeature == 0)
                 {
-                    for (int arcVertDisplace = 0; arcVertDisplace < topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])].Count - 1; arcVertDisplace++)
+                    for (int arcVertDisplace = 0; arcVertDisplace < topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])].Count - 1; arcVertDisplace++)
                     {
 
                         if (arcFeature > 0 && arcVertDisplace == 0)
@@ -104,50 +106,40 @@ public class MeshGenerator1 : MonoBehaviour
 
                         if (arcFeature == 0 && arcVertDisplace == 0)
                         {
-                            //vertices2DList.Add(new Vector2(pos.x, pos.y));
-                            //continue;
-                            pos.x = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
-                            pos.y = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
+
+                            pos.x = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
+                            pos.y = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
 
                         }
                         else
                         {
-                            pos.x += topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
-                            pos.y += topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
+                            pos.x += topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
+                            pos.y += topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
 
                         }
 
                         vertices2DList.Add(new Vector2(pos.x, pos.y));
                     }
                     vertices2DList.Reverse();
-                    pos.x = vertices2DList[vertices2DList.Count-1].x;
-                    pos.y = vertices2DList[vertices2DList.Count-1].y;
+                    pos.x = vertices2DList[vertices2DList.Count - 1].x;
+                    pos.y = vertices2DList[vertices2DList.Count - 1].y;
                 }
                 else
                 {
-                    int tmpArcFeat = topoData.objects.collection.geometries[feature].arcs[0][arcFeature];
-                    //Reversed
-                    for (int arcVertDisplace = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])].Count - 1; arcVertDisplace > 0; arcVertDisplace--)
+                    int tmpArcFeat = topoData.objects.collection.geometries[feature].arcs[child][arcFeature];
+                    for (int arcVertDisplace = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])].Count - 1; arcVertDisplace > 0; arcVertDisplace--)
                     {
 
-                        //Saltar-se la primera delta dels arcFeature de la primera feature que no sigui la del principi
-                        /*if (arcFeature > 0 && arcVertDisplace == topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])].Count - 1)
-                        {
-                            continue;
-                        }*/
-
                         //Saltar-se la primera delta dels arcFeature quan ja no és la primera feature
-                        if (arcFeature == 0 && arcVertDisplace == topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])].Count - 1)
+                        if (arcFeature == 0 && arcVertDisplace == topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])].Count - 1)
                         {
-                            //vertices2DList.Add(new Vector2(pos.x, pos.y));
-                            //continue;
-                            pos.x = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
-                            pos.y = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
+                            pos.x = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
+                            pos.y = topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
                         }
                         else
                         {
-                            pos.x -= topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
-                            pos.y -= topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[0][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
+                            pos.x -= topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].x * topoData.transform.scale[0];
+                            pos.y -= topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
 
                         }
 
@@ -156,11 +148,12 @@ public class MeshGenerator1 : MonoBehaviour
                     }
                 }
 
-                
-            } else
+
+            }
+            else
             {
-                int tmpArcFeat = topoData.objects.collection.geometries[feature].arcs[0][arcFeature];
-                for (int arcVertDisplace = 0; arcVertDisplace < topoData.arcs[topoData.objects.collection.geometries[feature].arcs[0][arcFeature]].Count; arcVertDisplace++)
+                int tmpArcFeat = topoData.objects.collection.geometries[feature].arcs[child][arcFeature];
+                for (int arcVertDisplace = 0; arcVertDisplace < topoData.arcs[topoData.objects.collection.geometries[feature].arcs[child][arcFeature]].Count; arcVertDisplace++)
                 {
 
                     if (arcFeature > 0 && arcVertDisplace == 0)
@@ -170,33 +163,37 @@ public class MeshGenerator1 : MonoBehaviour
 
                     if (arcFeature == 0 && arcVertDisplace == 0)
                     {
-                        //vertices2DList.Add(new Vector2(pos.x, pos.y));
-                        //continue;
-                        pos.x = topoData.arcs[topoData.objects.collection.geometries[feature].arcs[0][arcFeature]][arcVertDisplace].x * topoData.transform.scale[0];
-                        pos.y = topoData.arcs[topoData.objects.collection.geometries[feature].arcs[0][arcFeature]][arcVertDisplace].y * topoData.transform.scale[1];
+                        pos.x = topoData.arcs[topoData.objects.collection.geometries[feature].arcs[child][arcFeature]][arcVertDisplace].x * topoData.transform.scale[0];
+                        pos.y = topoData.arcs[topoData.objects.collection.geometries[feature].arcs[child][arcFeature]][arcVertDisplace].y * topoData.transform.scale[1];
 
-                    } else
+                    }
+                    else
                     {
-                        pos.x += topoData.arcs[topoData.objects.collection.geometries[feature].arcs[0][arcFeature]][arcVertDisplace].x * topoData.transform.scale[0];
-                        pos.y += topoData.arcs[topoData.objects.collection.geometries[feature].arcs[0][arcFeature]][arcVertDisplace].y * topoData.transform.scale[1];
-                        
+                        pos.x += topoData.arcs[topoData.objects.collection.geometries[feature].arcs[child][arcFeature]][arcVertDisplace].x * topoData.transform.scale[0];
+                        pos.y += topoData.arcs[topoData.objects.collection.geometries[feature].arcs[child][arcFeature]][arcVertDisplace].y * topoData.transform.scale[1];
+
                     }
 
-                   vertices2DList.Add(new Vector2(pos.x, pos.y));
+                    vertices2DList.Add(new Vector2(pos.x, pos.y));
                 }
             }
         }
 
-        //verticesTopoJson = new Vector3[sizeVertices]; //Change arcs to those of geometry
+
+        if (feature == 19)
+        {
+
+        }
+
         Vector2[] vertices2D = new Vector2[vertices2DList.Count];
         Vector3[] vertices = new Vector3[vertices2D.Length];
 
-        for(int i = 0; i < vertices2DList.Count; i++)
+        for (int i = 0; i < vertices2DList.Count; i++)
         {
             vertices2D[i] = new Vector2(vertices2DList[i].x, vertices2DList[i].y);
         }
 
-        Triangulator tr = new Triangulator(vertices2D);
+        Triangulator2 tr = new Triangulator2(vertices2D);
         int[] indices = tr.Triangulate();
 
         for (int i = 0; i < vertices.Length; i++)
@@ -209,5 +206,4 @@ public class MeshGenerator1 : MonoBehaviour
         triangles = indices;
 
     }
-
 }

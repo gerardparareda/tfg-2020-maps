@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\TopoArcsWrapper.cs" />
     <Compile Include="Assets\Scripts\TopoJsonReader.cs" />
     <Compile Include="Assets\Scripts\Triangulator.cs" />
+    <Compile Include="Assets\Scripts\Triangulator2.cs" />
     <Compile Include="Assets\Scripts\topoJsonWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
