@@ -6,7 +6,6 @@ using UnityEngine;
 public class MeshGenerator1 : MonoBehaviour
 {
     public string path;
-    //public int feature;
     public GameObject nodePrefab;
 
     TopoJsonReader topoReader;
@@ -14,8 +13,8 @@ public class MeshGenerator1 : MonoBehaviour
     List<GameObject> nodes;
 
     Vector2 pos;
-
-    Mesh mesh;
+    Vector2 boundsHorizontal;
+    Vector2 boundsVertical;
 
     Vector3[] verticesTopoJson;
 
@@ -32,6 +31,16 @@ public class MeshGenerator1 : MonoBehaviour
 
         CreateAllGameObjects();
 
+        Camera.main.GetComponent<CameraFocusMap>().CenterCameraFocus(GetNodesCenter());
+
+    }
+
+    Vector2 GetNodesCenter()
+    {
+        float centerX = boundsHorizontal.x + (boundsHorizontal.y / 2);
+        float centerY = boundsVertical.x + (boundsVertical.y / 2);
+
+        return new Vector2( centerX, centerY);
     }
 
     void CreateAllGameObjects()
@@ -51,7 +60,7 @@ public class MeshGenerator1 : MonoBehaviour
                 newNode.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
                 newNode.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
                 newNode.GetComponent<Node>().UpdateMesh();
-                newNode.name = "Node" + i;
+                newNode.name = topoData.objects.collection.geometries[i].properties.nom_comar;
                 newNode.transform.parent = this.transform;
 
                 nodes.Add(newNode);
@@ -117,6 +126,7 @@ public class MeshGenerator1 : MonoBehaviour
                             pos.y += topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
 
                         }
+                        UpdateBounds();
 
                         vertices2DList.Add(new Vector2(pos.x, pos.y));
                     }
@@ -142,6 +152,7 @@ public class MeshGenerator1 : MonoBehaviour
                             pos.y -= topoData.arcs[-1 * (1 + topoData.objects.collection.geometries[feature].arcs[child][arcFeature])][arcVertDisplace].y * topoData.transform.scale[1];
 
                         }
+                        UpdateBounds();
 
                         vertices2DList.Add(new Vector2(pos.x, pos.y));
 
@@ -173,6 +184,7 @@ public class MeshGenerator1 : MonoBehaviour
                         pos.y += topoData.arcs[topoData.objects.collection.geometries[feature].arcs[child][arcFeature]][arcVertDisplace].y * topoData.transform.scale[1];
 
                     }
+                    UpdateBounds();
 
                     vertices2DList.Add(new Vector2(pos.x, pos.y));
                 }
@@ -205,5 +217,25 @@ public class MeshGenerator1 : MonoBehaviour
 
         triangles = indices;
 
+    }
+
+    void UpdateBounds()
+    {
+        if(pos.x < boundsHorizontal.x)
+        {
+            boundsHorizontal.x = pos.x;
+        }
+        if (pos.x > boundsHorizontal.y)
+        {
+            boundsHorizontal.y = pos.x;
+        }
+        if (pos.y < boundsVertical.x)
+        {
+            boundsVertical.y = pos.y;
+        }
+        if (pos.y > boundsVertical.y)
+        {
+            boundsVertical.y = pos.y;
+        }
     }
 }

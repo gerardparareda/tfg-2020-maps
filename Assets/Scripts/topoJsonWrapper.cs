@@ -11,7 +11,7 @@ public class topoJsonWrapper
     [SerializeField]
     public List<List<Vector2>> arcs;
     public TransformField transform;
-    public double[] bbox;
+    public float[] bbox;
 
 }
 
@@ -40,11 +40,20 @@ public class Geometry
 {
     public string type;
     public List<List<int>> arcs;
-    //public Properties properties;
+    public Properties properties;
 
     public Geometry(string type, List<List<int>> arcs)
     {
         this.type = type;
         this.arcs = arcs;
     }
+}
+
+//EDIT THIS
+[Serializable]
+public class Properties
+{
+    public string cap_comar;
+    public int comarca;
+    public string nom_comar;
 }

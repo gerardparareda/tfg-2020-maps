@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 public class TopoJsonReader : MonoBehaviour
 {
-    TextAsset testText;
+    public TextAsset testText;
     //string path = "TopoJsonMaps/map2";
-    topoJsonWrapper topoInfo;
+    public topoJsonWrapper topoInfo;
 
     public void ParseTopoJSON(string path)
     {
@@ -44,7 +44,7 @@ public class TopoJsonReader : MonoBehaviour
             topoInfo.objects.collection.geometries = new List<Geometry>();
         } else
         {
-            topoInfo.objects.collection.geometries.Clear();
+            //topoInfo.objects.collection.geometries.Clear();
         }
 
         string toFind2 = "arcs\":[[";
@@ -117,7 +117,8 @@ public class TopoJsonReader : MonoBehaviour
                     //tmpList.Add(JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":[" + parseList + "]}").newGeometryArcs);
                 }
 
-                topoInfo.objects.collection.geometries.Add(new Geometry("MultiPolygon", tmpList));
+                topoInfo.objects.collection.geometries[g].arcs = tmpList;
+                //topoInfo.objects.collection.geometries.Add(new Geometry("MultiPolygon", tmpList));
 
             }
             else
@@ -135,7 +136,7 @@ public class TopoJsonReader : MonoBehaviour
                 string string2 = text.Substring(posArcs + 1, posEndArcs - posArcs - 2); //Start, Length
                 string2 = string2.Replace(" ", "");
 
-                Debug.Log("g: " + g + " str:" + string2);
+                //Debug.Log("g: " + g + " str:" + string2);
 
                 MatchCollection matchCollection = rx2.Matches(string2);
 
@@ -151,7 +152,8 @@ public class TopoJsonReader : MonoBehaviour
                     tmpList.Add(JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":[" + parsedArray + "]}").newGeometryArcs);
                 }
 
-                topoInfo.objects.collection.geometries.Add(new Geometry("Polygon", tmpList));
+                topoInfo.objects.collection.geometries[g].arcs = tmpList;
+                //topoInfo.objects.collection.geometries.Add(new Geometry("Polygon", tmpList));
 
                 //topoInfo.objects.collection.geometries.Add(new Geometry("Polygon", (JsonUtility.FromJson<TopoArcsWrapper>("{\"newGeometryArcs\":" + string2 + "}")).newGeometryArcs));
 

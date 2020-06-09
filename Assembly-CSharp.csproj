@@ -60,10 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CameraFocusMap.cs" />
     <Compile Include="Assets\Scripts\CameraMovementScript.cs" />
     <Compile Include="Assets\Scripts\CameraMovementScript1.cs" />
     <Compile Include="Assets\Scripts\Delaunay.cs" />
+    <Compile Include="Assets\Scripts\FabricatedMap.cs" />
     <Compile Include="Assets\Scripts\GameCanvasScript.cs" />
+    <Compile Include="Assets\Scripts\Map.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator1.cs" />
@@ -76,8 +79,6 @@
     <Compile Include="Assets\Scripts\topoJsonWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
-     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
      <None Include="Assets\Resources\TopoJsonMaps\spain-comunidad.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat1.txt" />
@@ -85,17 +86,17 @@
      <None Include="Assets\Resources\TopoJsonMaps\catcom4.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcomarca.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat3.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\countries-10m.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\create2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\ripoll.txt" />
-     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
      <None Include="Assets\Resources\TopoJsonMaps\iberia.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map_convex3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\osona-ripolles.txt" />
-     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
+     <None Include="Assets\Resources\TopoJsonMaps\countries-110m.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map_cat1.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat-only.txt" />
