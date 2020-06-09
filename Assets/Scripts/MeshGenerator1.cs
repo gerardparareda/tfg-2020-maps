@@ -60,6 +60,7 @@ public class MeshGenerator1 : MonoBehaviour
                 newNode.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
                 newNode.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
                 newNode.GetComponent<Node>().UpdateMesh();
+                newNode.GetComponent<Node>().SetColliderMesh();
                 newNode.name = topoData.objects.collection.geometries[i].properties.nom_comar;
                 newNode.transform.parent = this.transform;
 

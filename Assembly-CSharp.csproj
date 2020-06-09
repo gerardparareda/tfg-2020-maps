@@ -70,8 +70,8 @@
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator1.cs" />
-    <Compile Include="Assets\Scripts\Mission.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\OnHoverProvince.cs" />
     <Compile Include="Assets\Scripts\TopoArcsWrapper.cs" />
     <Compile Include="Assets\Scripts\TopoJsonReader.cs" />
     <Compile Include="Assets\Scripts\Triangulator.cs" />

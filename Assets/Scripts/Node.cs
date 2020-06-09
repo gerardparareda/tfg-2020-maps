@@ -36,6 +36,10 @@ public class Node : MonoBehaviour
         FixMeshNormals();
     }
 
+    public void SetColliderMesh()
+    {
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+    }
     void FixMeshNormals()
     {
         Vector3[] normals = mesh.normals;
