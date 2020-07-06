@@ -5,6 +5,8 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     Mesh mesh;
+    public Material borderMat;
+    public float borderWidth = 0.01f;
 
     Vector3[] newVerticesTopoJson;
 
@@ -13,6 +15,11 @@ public class Node : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+    }
+
+    private void Update()
+    {
+        transform.localScale = transform.localScale;
     }
 
     public void SetNewVerticesFromTopoJSON(Vector3[] newVerts)
@@ -31,15 +38,49 @@ public class Node : MonoBehaviour
         mesh.vertices = newVerticesTopoJson;
         mesh.triangles = newTriangles;
 
+        //Arreglats enclavaments movent-los una mica endavant per solucionar el Z-Fighting
+        if (mesh.bounds.size.x < 0.09f)
+        {
+            Vector3[] tmpVerts = new Vector3[newVerticesTopoJson.Length];
+
+            Debug.Log(name);
+            Debug.Log(transform.localPosition);
+            for(int i = 0; i < mesh.vertices.Length; i++)
+            {
+                tmpVerts[i] = new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, -0.001f);
+            }
+
+            mesh.vertices = tmpVerts;
+        }
+
         mesh.RecalculateNormals();
         mesh.RecalculateTangents();
         FixMeshNormals();
+        SetOutline();
     }
 
     public void SetColliderMesh()
     {
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
+
+    void SetOutline()
+    {
+        LineRenderer border = GetComponent<LineRenderer>();
+        border.positionCount = mesh.vertices.Length;
+        border.widthMultiplier = borderWidth;
+        border.material = borderMat;
+        border.SetPositions(mesh.vertices);
+        if(transform.position.z > 0)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0.001f);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0.001f);
+        }
+    }
+
     void FixMeshNormals()
     {
         Vector3[] normals = mesh.normals;

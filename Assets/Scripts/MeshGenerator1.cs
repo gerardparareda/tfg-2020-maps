@@ -7,6 +7,7 @@ public class MeshGenerator1 : MonoBehaviour
 {
     public string path;
     public GameObject nodePrefab;
+    MapHandler mapHandler;
 
     TopoJsonReader topoReader;
 
@@ -33,6 +34,8 @@ public class MeshGenerator1 : MonoBehaviour
 
         Camera.main.GetComponent<CameraFocusMap>().CenterCameraFocus(GetNodesCenter());
 
+        MapHandler mapHandler = new MapHandler(nodes);
+
     }
 
     Vector2 GetNodesCenter()
@@ -57,11 +60,11 @@ public class MeshGenerator1 : MonoBehaviour
                 GameObject newNode = Instantiate(nodePrefab, gameObject.transform.position, Quaternion.identity);
                 CreateGeometryFromTopoJSON(i, 0);
 
+                newNode.name = topoData.objects.collection.geometries[i].properties.nom_comar;
                 newNode.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
                 newNode.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
                 newNode.GetComponent<Node>().UpdateMesh();
                 newNode.GetComponent<Node>().SetColliderMesh();
-                newNode.name = topoData.objects.collection.geometries[i].properties.nom_comar;
                 newNode.transform.parent = this.transform;
 
                 nodes.Add(newNode);
