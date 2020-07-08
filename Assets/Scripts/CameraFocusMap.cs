@@ -5,15 +5,7 @@ using UnityEngine;
 public class CameraFocusMap : MonoBehaviour
 {
 
-    public GameObject topoJsonMap;
-
     public float cameraDistance;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void CenterCameraFocus(Vector2 center)
     {

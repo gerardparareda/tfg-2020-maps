@@ -60,10 +60,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\CameraFocusMap.cs" />
     <Compile Include="Assets\Scripts\CameraGenerateTextures.cs" />
     <Compile Include="Assets\Scripts\CameraMovementScript.cs" />
     <Compile Include="Assets\Scripts\CameraMovementScript1.cs" />
+    <Compile Include="Assets\Scripts\CameraMovementSimple.cs" />
     <Compile Include="Assets\Scripts\Delaunay.cs" />
     <Compile Include="Assets\Scripts\FabricatedMap.cs" />
     <Compile Include="Assets\Scripts\Faction.cs" />
@@ -73,6 +81,7 @@
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator1.cs" />
+    <Compile Include="Assets\Scripts\Modifier.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\OnHoverProvince.cs" />
     <Compile Include="Assets\Scripts\TopoArcsWrapper.cs" />
@@ -94,17 +103,20 @@
      <None Include="Assets\Resources\TopoJsonMaps\catcom2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\create2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain.txt" />
+     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
      <None Include="Assets\Resources\TopoJsonMaps\ripoll.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\iberia.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map_convex3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\osona-ripolles.txt" />
+     <None Include="Assets\Demigiant\DOTween\DOTween.dll" />
      <None Include="Assets\Resources\TopoJsonMaps\countries-110m.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map_cat1.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat-only.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\multipoly.txt" />
+     <None Include="Assets\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom5.txt" />
      <None Include="Assets\Shaders\OutlineS.shader" />
@@ -158,6 +170,12 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>E:\ProgramFiles\UnityEngine\2020.1.0b1\Editor\Data\Managed\UnityEngine\UnityEngine.AIModule.dll</HintPath>
@@ -338,6 +356,9 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>E:\ProgramFiles\UnityEngine\2020.1.0b1\Editor\Data\Managed\UnityEngine\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>E:\ProgramFiles\UnityEngine\2020.1.0b1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

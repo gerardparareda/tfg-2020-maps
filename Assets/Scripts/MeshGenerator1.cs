@@ -7,6 +7,7 @@ public class MeshGenerator1 : MonoBehaviour
 {
     public string path;
     public GameObject nodePrefab;
+    public GameObject cameraHandler;
     MapHandler mapHandler;
 
     TopoJsonReader topoReader;
@@ -32,9 +33,10 @@ public class MeshGenerator1 : MonoBehaviour
 
         CreateAllGameObjects();
 
-        Camera.main.GetComponent<CameraFocusMap>().CenterCameraFocus(GetNodesCenter());
+        cameraHandler.GetComponent<CameraFocusMap>().CenterCameraFocus(GetNodesCenter());
 
-        MapHandler mapHandler = new MapHandler(nodes);
+        mapHandler = GetComponent<MapHandler>();
+        mapHandler.InitializeMap(nodes);
 
     }
 

@@ -43,8 +43,6 @@ public class Node : MonoBehaviour
         {
             Vector3[] tmpVerts = new Vector3[newVerticesTopoJson.Length];
 
-            Debug.Log(name);
-            Debug.Log(transform.localPosition);
             for(int i = 0; i < mesh.vertices.Length; i++)
             {
                 tmpVerts[i] = new Vector3(mesh.vertices[i].x, mesh.vertices[i].y, -0.001f);
