@@ -41,6 +41,7 @@ public class Geometry
     public string type;
     public List<List<int>> arcs;
     public Properties properties;
+    public string geomName;
 
     public Geometry(string type, List<List<int>> arcs)
     {
@@ -53,7 +54,5 @@ public class Geometry
 [Serializable]
 public class Properties
 {
-    public string cap_comar;
-    public int comarca;
-    public string nom_comar;
+    public string name;
 }

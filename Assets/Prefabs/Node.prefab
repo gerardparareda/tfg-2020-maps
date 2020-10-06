@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5142215194743617422}
   - component: {fileID: 3981908402099907319}
   - component: {fileID: 2646390878170780679}
-  - component: {fileID: 3403082569281133682}
   - component: {fileID: 8814239661557578897}
   m_Layer: 0
   m_Name: Node
@@ -99,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   borderMat: {fileID: 2100000, guid: c2adf1b9c3ff8d44d82b413ae08bfdc1, type: 2}
+  selectedBorderMat: {fileID: 0}
+  selectedBorderColor: {r: 1, g: 0.7194875, b: 0, a: 0}
   borderWidth: 0.005
 --- !u!114 &3981908402099907319
 MonoBehaviour:
@@ -112,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc3425013b98a0498085ac2b42d92ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tmpMat: {fileID: 0}
   onEnter: {fileID: 2100000, guid: 73ba7b7906233fe458950c83ad30537e, type: 2}
   onExit: {fileID: 2100000, guid: ed23db04377a09c46bfee2990fbae940, type: 2}
 --- !u!64 &2646390878170780679
@@ -128,21 +130,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &3403082569281133682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8793702108797209496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!120 &8814239661557578897
 LineRenderer:
   m_ObjectHideFlags: 0

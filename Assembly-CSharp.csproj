@@ -52,6 +52,9 @@
     <UnityVersion>2020.1.0b1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>E:\ProgramFiles\UnityEngine\2020.1.0b1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -89,9 +92,11 @@
     <Compile Include="Assets\Scripts\Triangulator.cs" />
     <Compile Include="Assets\Scripts\Triangulator2.cs" />
     <Compile Include="Assets\Scripts\UI\ProvinceTooltip.cs" />
+    <Compile Include="Assets\Scripts\UI\ProvinceView.cs" />
     <Compile Include="Assets\Scripts\topoJsonWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\Resources\TopoJsonMaps\fr-departments.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain-comunidad.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat1.txt" />
@@ -102,6 +107,7 @@
      <None Include="Assets\Resources\TopoJsonMaps\countries-10m.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\create2.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\jp-towns.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain.txt" />
      <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
      <None Include="Assets\Resources\TopoJsonMaps\ripoll.txt" />
@@ -110,18 +116,24 @@
      <None Include="Assets\Resources\TopoJsonMaps\map2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\osona-ripolles.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\spain-province.txt" />
      <None Include="Assets\Demigiant\DOTween\DOTween.dll" />
+     <None Include="Assets\Resources\TopoJsonMaps\jp-prefectures.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\countries-110m.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map_cat1.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat-only.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\multipoly.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\ireland-counties.txt" />
      <None Include="Assets\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom5.txt" />
      <None Include="Assets\Shaders\OutlineS.shader" />
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
@@ -156,6 +168,9 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
@@ -170,12 +185,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>E:\ProgramFiles\UnityEngine\2020.1.0b1\Editor\Data\Managed\UnityEngine\UnityEngine.AIModule.dll</HintPath>

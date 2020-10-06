@@ -25,9 +25,9 @@ public class CameraMovementSimple : MonoBehaviour
         newPos.x += Input.GetAxis("Horizontal") * panSpeed * Time.deltaTime;
         newPos.z += Input.GetAxis("Mouse ScrollWheel") * scrollSpeed * Time.deltaTime;
 
-        newPos.x = Mathf.Clamp(newPos.x, minPanHoritzontal, maxPanHoritzontal);
+        /*newPos.x = Mathf.Clamp(newPos.x, minPanHoritzontal, maxPanHoritzontal);
         newPos.y = Mathf.Clamp(newPos.y, minPanVertical, maxPanVertical);
-        newPos.z = Mathf.Clamp(newPos.z, maxScroll, minScroll);
+        newPos.z = Mathf.Clamp(newPos.z, maxScroll, minScroll);*/
 
         transform.position = newPos;
     }

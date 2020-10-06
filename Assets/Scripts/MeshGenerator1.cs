@@ -6,8 +6,11 @@ using UnityEngine;
 public class MeshGenerator1 : MonoBehaviour
 {
     public string path;
+    public bool readNames;
+    public string nameField;
     public GameObject nodePrefab;
     public GameObject cameraHandler;
+    public GameObject center;
     MapHandler mapHandler;
 
     TopoJsonReader topoReader;
@@ -27,13 +30,14 @@ public class MeshGenerator1 : MonoBehaviour
         nodes = new List<GameObject>();
 
         topoReader = new TopoJsonReader();
-        topoReader.ParseTopoJSON(path);
+        topoReader.ParseTopoJSON(path, readNames, nameField);
 
         pos = new Vector2(0, 0);
 
         CreateAllGameObjects();
 
         cameraHandler.GetComponent<CameraFocusMap>().CenterCameraFocus(GetNodesCenter());
+        //center.transform.position = new Vector3(GetNodesCenter().x, GetNodesCenter().y, center.transform.position.z);
 
         mapHandler = GetComponent<MapHandler>();
         mapHandler.InitializeMap(nodes);
@@ -62,7 +66,14 @@ public class MeshGenerator1 : MonoBehaviour
                 GameObject newNode = Instantiate(nodePrefab, gameObject.transform.position, Quaternion.identity);
                 CreateGeometryFromTopoJSON(i, 0);
 
-                newNode.name = topoData.objects.collection.geometries[i].properties.nom_comar;
+                if(readNames)
+                {
+                    newNode.name = topoData.objects.collection.geometries[i].geomName;
+                }
+                else
+                {
+                    newNode.name = "Def " + i;
+                }
                 newNode.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
                 newNode.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
                 newNode.GetComponent<Node>().UpdateMesh();
@@ -84,15 +95,32 @@ public class MeshGenerator1 : MonoBehaviour
                     newNodeChild.GetComponent<Node>().SetNewVerticesFromTopoJSON(verticesTopoJson);
                     newNodeChild.GetComponent<Node>().SetNewTrianglesFromTopoJSON(triangles);
                     newNodeChild.GetComponent<Node>().UpdateMesh();
-                    newNodeChild.name = "Node" + i + " , " + j;
+                    newNodeChild.GetComponent<Node>().SetColliderMesh();
+                    if (readNames)
+                    {
+                        newNodeChild.name = topoData.objects.collection.geometries[i].geomName;
+                    }
+                    else
+                    {
+                        newNodeChild.name = "Node" + i + " , " + j;
+                    }
 
                     newNodeChild.transform.parent = newNodeParent.transform;
                 }
 
-                newNodeParent.name = "Node" + i;
+                if (readNames)
+                {
+                    newNodeParent.name = topoData.objects.collection.geometries[i].geomName;
+                }
+                else
+                {
+                    newNodeParent.name = "Node" + i;
+                }
                 newNodeParent.transform.parent = this.transform;
+                newNodeParent.GetComponent<LineRenderer>().enabled = false;
 
                 nodes.Add(newNodeParent);
+                
             }
             
         }

@@ -5,8 +5,13 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     Mesh mesh;
+    LineRenderer border;
+    Vector3[] borderPoints;
     public Material borderMat;
+    public Color selectedBorderColor;
     public float borderWidth = 0.01f;
+
+    public Province province;
 
     Vector3[] newVerticesTopoJson;
 
@@ -15,6 +20,7 @@ public class Node : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        border = GetComponent<LineRenderer>();
     }
 
     private void Update()
@@ -62,21 +68,38 @@ public class Node : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
-    void SetOutline()
+    public void SetOutline()
     {
-        LineRenderer border = GetComponent<LineRenderer>();
-        border.positionCount = mesh.vertices.Length;
+        borderPoints = new Vector3[mesh.vertices.Length+1]; //+1 To add the closing one
+        for (int i = 0; i < mesh.vertices.Length; i++)
+        {
+            borderPoints[i] = mesh.vertices[i];
+        }
+        borderPoints[borderPoints.Length-1] = borderPoints[0]; //Set the last equal the first to close the border
+        border.positionCount = mesh.vertices.Length + 1;
         border.widthMultiplier = borderWidth;
         border.material = borderMat;
-        border.SetPositions(mesh.vertices);
-        if(transform.position.z > 0)
+        border.SetPositions(borderPoints);
+    }
+
+    public void SetOutlineSelected()
+    {
+        Vector3[] newBorderPos = new Vector3[borderPoints.Length];
+        for(int i = 0; i < borderPoints.Length; i++)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0.001f);
+            newBorderPos[i] = new Vector3(borderPoints[i].x, borderPoints[i].y, borderPoints[i].z - 0.002f);
         }
-        else
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0.001f);
-        }
+        border.SetPositions(newBorderPos);
+        border.widthMultiplier = borderWidth + 0.0025f;
+        border.material.SetColor("_Color", selectedBorderColor);
+        
+    }
+
+    public void UnsetOutlineSelected()
+    {
+        border.SetPositions(borderPoints);
+        border.widthMultiplier = borderWidth;
+        border.material.SetColor("_Color", Color.black);
     }
 
     void FixMeshNormals()
