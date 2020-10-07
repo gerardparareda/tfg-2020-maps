@@ -109,6 +109,7 @@
      <None Include="Assets\Resources\TopoJsonMaps\create2.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\jp-towns.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\spain.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\us-albers.txt" />
      <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
      <None Include="Assets\Resources\TopoJsonMaps\ripoll.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\iberia.txt" />
@@ -120,6 +121,7 @@
      <None Include="Assets\Demigiant\DOTween\DOTween.dll" />
      <None Include="Assets\Resources\TopoJsonMaps\jp-prefectures.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\countries-110m.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\spain-municipalities.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map_cat1.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\cat-only.txt" />
@@ -128,6 +130,7 @@
      <None Include="Assets\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\map3.txt" />
      <None Include="Assets\Resources\TopoJsonMaps\catcom5.txt" />
+     <None Include="Assets\Resources\TopoJsonMaps\south-africa-provinces.txt" />
      <None Include="Assets\Shaders\OutlineS.shader" />
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>

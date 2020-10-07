@@ -60,6 +60,11 @@ public class MeshGenerator1 : MonoBehaviour
         for (int i = 0; i < topoData.objects.collection.geometries.Count; i++)
         {
 
+            if(topoData.objects.collection.geometries[i].geomName == "Fiji")
+            {
+
+            }
+
             if (topoData.objects.collection.geometries[i].type == "Polygon")
             {
                 //Instantiate nodePrefab at the same position as the parentNode
@@ -134,6 +139,7 @@ public class MeshGenerator1 : MonoBehaviour
 
         for (int arcFeature = 0; arcFeature < topoData.objects.collection.geometries[feature].arcs[child].Count; arcFeature++)
         {
+
             if (topoData.objects.collection.geometries[feature].arcs[child][arcFeature] < 0)
             {
 
@@ -162,7 +168,14 @@ public class MeshGenerator1 : MonoBehaviour
                         }
                         UpdateBounds();
 
-                        vertices2DList.Add(new Vector2(pos.x, pos.y));
+                        if (vertices2DList.Count == 0)
+                        {
+                            vertices2DList.Add(new Vector2(pos.x, pos.y));
+                        }
+                        else if (pos.x != vertices2DList[vertices2DList.Count - 1].x || pos.y != vertices2DList[vertices2DList.Count - 1].y)
+                        { 
+                            vertices2DList.Add(new Vector2(pos.x, pos.y));
+                        }
                     }
                     vertices2DList.Reverse();
                     pos.x = vertices2DList[vertices2DList.Count - 1].x;
@@ -188,7 +201,14 @@ public class MeshGenerator1 : MonoBehaviour
                         }
                         UpdateBounds();
 
-                        vertices2DList.Add(new Vector2(pos.x, pos.y));
+                        if (vertices2DList.Count == 0)
+                        {
+                            vertices2DList.Add(new Vector2(pos.x, pos.y));
+                        }
+                        else if (pos.x != vertices2DList[vertices2DList.Count - 1].x || pos.y != vertices2DList[vertices2DList.Count - 1].y)
+                        {
+                            vertices2DList.Add(new Vector2(pos.x, pos.y));
+                        }
 
                     }
                 }
@@ -219,8 +239,15 @@ public class MeshGenerator1 : MonoBehaviour
 
                     }
                     UpdateBounds();
-
-                    vertices2DList.Add(new Vector2(pos.x, pos.y));
+                    
+                    if(vertices2DList.Count == 0)
+                    {
+                        vertices2DList.Add(new Vector2(pos.x, pos.y));
+                    }
+                    else if(pos.x != vertices2DList[vertices2DList.Count - 1].x || pos.y != vertices2DList[vertices2DList.Count - 1].y)
+                    {
+                        vertices2DList.Add(new Vector2(pos.x, pos.y));
+                    }
                 }
             }
         }

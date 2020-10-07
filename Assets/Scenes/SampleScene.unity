@@ -460,9 +460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1042fe5131a790a4ebec0827ef779422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: jp-prefectures
+  path: us-albers
   readNames: 1
-  nameField: NAME_1
+  nameField: name
   nodePrefab: {fileID: 8793702108797209496, guid: 1072e808067c125468e0b917363a5a90,
     type: 3}
   cameraHandler: {fileID: 622154330}
